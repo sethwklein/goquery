@@ -39,6 +39,16 @@ func (this *Selection) Slice(start int, end int) *Selection {
 	return pushStack(this, this.Nodes[start:end])
 }
 
+// Range() returns a slice of Selections, one per element. This is for
+// iterating over a Selection with a for-range loop.
+func (this *Selection) Range() []*Selection {
+	a := make([]*Selection, len(this.Nodes))
+	for i := range this.Nodes {
+		a[i] = newSingleSelection(this.Nodes[i], this.document)
+	}
+	return a
+}
+
 // Get() retrieves the underlying node at the specified index.
 // Get() without parameter is not implemented, since the node array is available
 // on the Selection object.
